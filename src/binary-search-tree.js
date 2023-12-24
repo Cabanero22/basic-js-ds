@@ -9,7 +9,7 @@ const { Node } = require('../extensions/list-tree.js');
 class BinarySearchTree {
 
   constructor() {
-    this.rootElement = null;
+    this.rootElement = null; // начальное значение (так как корень отсутствует)
   }
 
   root() {
@@ -55,7 +55,7 @@ class BinarySearchTree {
       let result;
       if (node.data > data) {
       result = findInside(node.left, data);
-    } else{
+    } else {
       result = findInside(node.right, data)
     }
       return result;
@@ -77,16 +77,51 @@ class BinarySearchTree {
       let result;
       if (node.data > data) {
       result = findInside(node.left, data);
-    } else{
+    } else {
       result = findInside(node.right, data)
     }
       return result;
     }
   }
 
-  remove(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  remove(data) {
+    this.rootElement = removeNode(this.rootElement, data);
+
+    function removeNode (node, data) {
+      if (node === null) return null; // проверяем на наличие узла
+
+      if(node.data > data) {
+        node.left = removeNode (node.left, data); // обновляем левое поддерево
+        return node; // возвращаем его
+      } else if (node.data < data) {
+        node.right = removeNode(node.right, data); // обновляем правое поддерево
+        return node
+      } else if (node.data === data) {  // если равно тому что находится в узле
+
+            if (node.left === null && node.right === null) { // проверка на отсутстве потомков
+              return null // то удаляем и возвращаем null
+            }
+
+            if(node.left === null) { // если нет только левого поддерева
+              node = node.right; // то кладем вместо него правое
+              return node;
+            }
+
+            if(node.left === null) { // если нет только правого поддерева
+              node = node.left; // то кладем вместо него правое
+              return node;
+            }
+
+            let minFromRightTree = node.right; //берем минимум среди правого поддерева и начинаем с корня правого
+            while (minFromRightTree.left) { // идем до тех пор пока эл. слева есть
+              minFromRightTree = minFromRightTree.left;
+            }
+            node.data = minFromRightTree.data;
+            node.right = removeNode(node.right, minFromRightTree.data)
+            
+            return node;
+      }
+    }
   }
 
   min() {
