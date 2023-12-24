@@ -57,14 +57,31 @@ class BinarySearchTree {
       result = findInside(node.left, data);
     } else{
       result = findInside(node.right, data)
-    } 
+    }
       return result;
     }
   }
 
-  find(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  find(data) {
+    return findInside (this.rootElement, data);
+
+    function findInside (node, data) {
+      if (node === null) {
+        return node; // меняем возврат булевого на возврат узла, если такой есть
+      }
+
+      if (node.data === data) {
+        return node; // меняем возврат булевого на возврат узла, если такой есть
+      }
+
+      let result;
+      if (node.data > data) {
+      result = findInside(node.left, data);
+    } else{
+      result = findInside(node.right, data)
+    }
+      return result;
+    }
   }
 
   remove(/* data */) {
