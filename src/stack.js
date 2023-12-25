@@ -17,15 +17,15 @@ class Stack {
     this.items = [];
   }
 
-  push(element) { // Добавить элемент в конец стэка
+  push(element) {
     this.items.push(element);
   }
 
-  pop() { // Удалить последний элемент из стэка
+  pop() {
     return this.items.pop();
   }
 
-  peek() { // Вернуть последний элемент стэка
+  peek() {
     return this.items[this.items.length - 1];
   }
 }
